@@ -1,12 +1,19 @@
 Require Import SetoidClass.
 
-Class group (G: Type) `(Setoid G) (op: G -> G -> G) (zero: G) (inv: G -> G) :=
+Class group (G: Type) `(Setoid G) (opG: G -> G -> G) (zeroG: G) (invG: G -> G) :=
 {
-  g_assoc    : forall {a b c}, op (op a b) c == op a (op b c);
-  g_identity : forall {a}, op zero a == a;
-  g_inverse  : forall {a}, op (inv a) a == zero
+  g_assoc    : forall {a b c}, opG (opG a b) c == opG a (opG b c);
+  g_identity : forall {a}, opG zeroG a == a;
+  g_inverse  : forall {a}, opG (invG a) a == zeroG
 }.
 Check group.
+
+Class abelian_group (G: Type) (sG: Setoid G) (opG: G -> G -> G) (zeroG: G) (invG: G -> G)
+                    (gG: (@group G sG opG zeroG invG)) :=
+{
+  g_comm    : forall {a b: G}, (opG a b) == (opG b a)
+}.
+Check abelian_group.
 
 Class group_hom (G H: Type) (h: G -> H) (sG: Setoid G) (opG: G -> G -> G) (zeroG: G) (invG: G -> G)
                                         (sH: Setoid H) (opH: H -> H -> H) (zeroH: H) (invH: H -> H) 
@@ -33,6 +40,7 @@ Definition image (G H: Type) (h: G -> H) (sG: Setoid G) (opG: G -> G -> G) (zero
                  (gH: (@group H sH opH zeroH invH))
                  `(@group_hom G H h sG opG zeroG invG sH opH zeroH invH gG gH) := { hu: H | hu == h u}.
 Check image.
+
 
 Class field (F: Type) `(s: Setoid F) (op1 op2: F -> F -> F) (zero one: F) (inv1 inv2: F -> F)
                       `(@group F s op1 zero inv1) :=
