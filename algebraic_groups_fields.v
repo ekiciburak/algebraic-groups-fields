@@ -8,6 +8,32 @@ Class group (G: Type) `(Setoid G) (op: G -> G -> G) (zero: G) (inv: G -> G) :=
 }.
 Check group.
 
+Class group_hom (G H: Type) (h: G -> H) (sG: Setoid G) (opG: G -> G -> G) (zeroG: G) (invG: G -> G)
+                                        (sH: Setoid H) (opH: H -> H -> H) (zeroH: H) (invH: H -> H) 
+                                        `(@group G sG opG zeroG invG)
+                                        `(@group H sH opH zeroH invH)
+:=
+{
+  h1 : forall (a b: G), h (opG a b) == opH (h a) (h b);
+  h2 : forall (a: G),   h (invG a)  == invH (h a)
+}.
+Check group_hom.
+
+Definition kernel (G H: Type) (h: G -> H) (sG: Setoid G) (opG: G -> G -> G) (zeroG: G) (invG: G -> G)
+                                          (sH: Setoid H) (opH: H -> H -> H) (zeroH: H) (invH: H -> H)
+                  (gG: (@group G sG opG zeroG invG))
+                  (gH: (@group H sH opH zeroH invH))
+                  `(@group_hom G H h sG opG zeroG invG sH opH zeroH invH gG gH) := { u: G | h u == zeroH }.
+Check kernel.
+
+Definition image (G H: Type) (h: G -> H) (sG: Setoid G) (opG: G -> G -> G) (zeroG: G) (invG: G -> G)
+                                         (sH: Setoid H) (opH: H -> H -> H) (zeroH: H) (invH: H -> H)
+                 (u: G)
+                 (gG: (@group G sG opG zeroG invG))
+                 (gH: (@group H sH opH zeroH invH))
+                 `(@group_hom G H h sG opG zeroG invG sH opH zeroH invH gG gH) := { hu: H | hu == h u}.
+Check image.
+
 Class field (F: Type) `(s: Setoid F) (op1 op2: F -> F -> F) (zero one: F) (inv1 inv2: F -> F)
                       `(@group F s op1 zero inv1) :=
 {
@@ -96,6 +122,7 @@ Check field_rationals.
 
 End rat_instances.
 
+
 Section real_instances.
 
 Require Import ZArith_base.
@@ -120,7 +147,7 @@ Next Obligation. unfold radd, rinv, rid. specialize (@Rplus_opp_r a).
 Check group_reals.
 
 Definition rmult (n m: R) := n * m.
-Definition rid2 := 1.
+Definition rid2 := 1%R.
 Definition rinv2 (n: R) := 1 / n.
 
 (** < R, +, *, 0, 1, ^{-1+}, ^{-1*} > as a field instance **)
