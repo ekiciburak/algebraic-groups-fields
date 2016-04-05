@@ -124,6 +124,7 @@ Definition rid2 := 1.
 Definition rinv2 (n: R) := 1 / n.
 
 (** < R, +, *, 0, 1, ^{-1+}, ^{-1*} > as a field instance **)
+(** Obligation 4 has currently no witness **)
 Program Instance field_reals: `(@field R (Req_setoid) _ rmult _ rid2 _ rinv2 group_reals).
 Obligation 1. unfold rmult. apply Rmult_assoc. Qed.
 Obligation 2. unfold rmult, rid2. apply Rmult_1_l. Qed.
