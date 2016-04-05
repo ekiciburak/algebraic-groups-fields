@@ -119,25 +119,19 @@ Next Obligation. unfold radd, rinv, rid. specialize (@Rplus_opp_r a).
 
 Check group_reals.
 
-
-(** TODO: < R, +, *, 0, 1, ^{-1+}, ^{-1*} > as a field instance **)
-(** Obligation 4 has currently no witness **)
-
-(*
 Definition rmult (n m: R) := n * m.
 Definition rid2 := 1.
 Definition rinv2 (n: R) := 1 / n.
 
+(** < R, +, *, 0, 1, ^{-1+}, ^{-1*} > as a field instance **)
 Program Instance field_reals: `(@field R (Req_setoid) _ rmult _ rid2 _ rinv2 group_reals).
 Obligation 1. unfold rmult. apply Rmult_assoc. Qed.
-Next Obligation. unfold rmult, rid2. apply Rmult_1_l. Qed.
-Next Obligation. unfold rid, rid2. apply R1_neq_R0. Qed.
-Next Obligation. unfold rmult, rinv2, rid2, rid in *. intros. revert H0. psatz R. admit. Qed.
-Next Obligation. unfold radd. apply Rplus_comm. Qed.
-Next Obligation. unfold rmult. apply Rmult_comm. Qed.
-Next Obligation. unfold radd, rmult. apply  Rmult_plus_distr_l. Qed.
+Obligation 2. unfold rmult, rid2. apply Rmult_1_l. Qed.
+Obligation 3. unfold rid, rid2. apply R1_neq_R0. Qed.
+(* Obligation 4. unfold rmult, rinv2, rid2, rid in *. intros. revert H0. psatz R. admit. Qed. *)
+Obligation 5. unfold radd. apply Rplus_comm. Qed.
+Obligation 6. unfold rmult. apply Rmult_comm. Qed.
+Obligation 7. unfold radd, rmult. apply  Rmult_plus_distr_l. Qed.
 
-*)
-
-
-
+(* Check field_reals.
+End real_instances. *)
