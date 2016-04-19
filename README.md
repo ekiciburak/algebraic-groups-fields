@@ -1,4 +1,4 @@
-# algebraic-groups-fields
+# algebraic-groups-rings-fields
 
 Aims to define algebraic groups, rings and fields to prove some of their general properties.
 
