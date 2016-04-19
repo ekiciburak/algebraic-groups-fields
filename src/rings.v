@@ -26,7 +26,7 @@ Definition zid2 := 1%Z.
 Program Instance Zeq_setoid : Setoid Z :=
   { equiv := eq ; setoid_equiv := eq_equivalence }.
 
-(** < Z, +, 0, ^{-1+} > as a group instance **)
+(** < Z, +, *, 0, 1, ^{-1+} > as a ring instance **)
 Program Instance ring_integers: (@ring Z (Zeq_setoid) _ zmult _ zid2 _ group_integers).
 Obligation 1. unfold zmult. rewrite Zmult_assoc. reflexivity. Qed.
 Next Obligation. destruct a; reflexivity. Qed.
