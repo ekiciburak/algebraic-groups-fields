@@ -1,1 +1,1 @@
-coq_makefile groups.v fields.v -o Makefile 
+coq_makefile groups.v rings.v fields.v -o Makefile 
