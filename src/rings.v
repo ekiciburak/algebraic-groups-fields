@@ -35,6 +35,39 @@ Next Obligation. unfold zadd. omega. Qed.
 Next Obligation. unfold zadd, zmult. apply Zmult_plus_distr_r. Qed.
 Check ring_integers.
 
-(* TODO:= proving Coq rationals and reels aZmult_1_ls ring instances *)
+Require Import Psatz.
+Require Import Nsatz.
+Require Import QArith.
+Open Scope Q_scope.
+
+Definition qmult (n m: Q) := n * m.
+Definition qid2 := 1.
+
+(** < Q, +, *, 0, 1, ^{-1+} > as a ring instance **)
+Program Instance ring_rationals: `(@ring Q (Qeq_setoid) _ qmult _ qid2 _ group_rationals).
+Obligation 1. unfold qmult. symmetry. apply Qmult_assoc. Qed. 
+Next Obligation. unfold qmult, qid2. apply Qmult_1_l. Qed.
+Next Obligation. unfold qadd, qinv, qid. rewrite Qplus_comm, Qplus_opp_r. reflexivity. Qed. 
+Next Obligation. unfold qadd. apply Qplus_comm. Qed.
+Next Obligation. unfold qadd, qmult. apply Qmult_plus_distr_r. Qed.
+Check ring_rationals.
+
+Require Import ZArith_base.
+Require Import Rdefinitions.
+Require Import Coq.Reals.Raxioms.
+Local Open Scope R_scope.
+
+Definition rmult (n m: R) := n * m.
+Definition rid2 := 1.
+
+(** < R, +, *, 0, 1, ^{-1+} > as a ring instance **)
+Program Instance ring_reals: `(@ring R _ _ rmult _ rid2 _ group_reals).
+Obligation 1. unfold rmult. apply Rmult_assoc. Qed.
+Next Obligation. unfold rmult, rid2. apply Rmult_1_l. Qed.
+Next Obligation. unfold radd, rinv, rid. rewrite Rplus_comm, Rplus_opp_r. reflexivity. Qed. 
+Next Obligation. unfold rid, rid2. apply R1_neq_R0. Qed.
+Next Obligation. unfold radd. apply Rplus_comm. Qed.
+Next Obligation. unfold radd, rmult. apply  Rmult_plus_distr_l. Qed.
+Check ring_reals.
 
 End Make.
