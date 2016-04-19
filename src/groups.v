@@ -44,15 +44,14 @@ Definition image (G H: Set) (h: G -> H) (sG: Setoid G) (opG: G -> G -> G) (zeroG
                  `(@group_hom G H h sG opG zeroG invG sH opH zeroH invH gG gH) := { hu: H | hu == h u}.
 Check image.
 
-
 (** subgroups
 Definition subgroup (G: Set) (sG: Setoid G) (opG: G -> G -> G) (zeroG: G) (invG: G -> G)
                              (gG: (@group G sG opG zeroG invG))
                     (P: G -> Prop)
-                             {sSG: Setoid { u: G | P u }} {opSG: { u: G | P u } -> { u: G | P u } -> { u: G | P u }} {zeroSG: { u: G | P u }} 
-                             {invSG: { u: G | P u } -> { u: G | P u }} :=
-                    (@group { u: G | P u } sSG opSG zeroSG invSG).
-
+                             {sSG: Setoid { u: G | P u }} 
+                             {opSG: { u: G | P u } -> { u: G | P u } -> { u: G | P u }} 
+                             {zeroSG: { u: G | P u }} 
+                             {invSG: { u: G | P u } -> { u: G | P u }} := (@group { u: G | P u } sSG opSG zeroSG invSG).
 Check subgroup.
 **)
 
@@ -77,7 +76,6 @@ Check group_integers.
 Program Instance abelian_group_integers: (@abelian_group Z (Zeq_setoid) zadd zid zinv group_integers).
 Obligation 1. unfold zadd. omega. Qed.
 Check abelian_group_integers.
-
 
 Require Import QArith.
 Open Scope Q_scope.
